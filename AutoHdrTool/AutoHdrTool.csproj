@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+		<StartupObject>AutoHdrTool.App</StartupObject>
+		<ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+	</PropertyGroup>
+	<PropertyGroup>
+		<UseWPF>True</UseWPF>
+		<UseWindowsForms>True</UseWindowsForms>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>False</AppendRuntimeIdentifierToOutputPath>
+		<OutputPath>$(SolutionDir)Build\$(Configuration)\$(AssemblyName)</OutputPath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Platforms>x86;x64;ARM64</Platforms>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<Optimize>True</Optimize>
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Assets\AppIcon.ico" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\ArnoldVinkCode\Desktop\ArnoldVinkCode.csproj" />
+		<ProjectReference Include="..\..\ArnoldVinkStyles\WPF\ArnoldVinkStyles.csproj" />
+	</ItemGroup>
+</Project>

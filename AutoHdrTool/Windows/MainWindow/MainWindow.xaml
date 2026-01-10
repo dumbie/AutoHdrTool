@@ -1,0 +1,112 @@
+﻿<Window x:Class="AutoHdrTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoHdrTool"
+        xmlns:AVStyles="clr-namespace:ArnoldVinkStyles;assembly=ArnoldVinkStyles"
+        mc:Ignorable="d"
+        Title="AutoHdrTool"
+        Height="500"
+        Width="750">
+    <Grid>
+        <!-- Grid Main -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Grid Menu -->
+            <Grid Name="grid_Menu" Grid.Column="0" Width="105" Background="{DynamicResource ApplicationBlackBrush}">
+                <ListBox Name="lb_Menu" SelectionMode="Single" ItemContainerStyle="{StaticResource ListBoxItemWhite}" Style="{StaticResource ListBoxVertical}">
+                    <StackPanel Name="menuButtonPreferences" Style="{StaticResource ListBoxMenuStackPanel}" ToolTipService.ToolTip="Auto HDR Preferences">
+                        <Image Source="/Assets/Preferences.png" Width="55" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Preferences" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Name="menuButtonApplications" Style="{StaticResource ListBoxMenuStackPanel}" ToolTipService.ToolTip="Auto HDR Applications">
+                        <Image Source="/Assets/Applications.png" Width="55" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Applications" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Name="menuButtonGeneral" Style="{StaticResource ListBoxMenuStackPanel}" ToolTipService.ToolTip="General Settings">
+                        <Image Source="/Assets/General.png" Width="55" HorizontalAlignment="Center"/>
+                        <TextBlock Text="General" Style="{StaticResource TextBlockWhite}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </ListBox>
+            </Grid>
+
+            <!-- Grid Preferences -->
+            <Grid Name="grid_Preferences" Grid.Column="1">
+                <StackPanel Margin="5">
+                    <ComboBox Name="combobox_Preferences_Applications" Height="35" Style="{DynamicResource ComboBoxBlack}"/>
+
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="Enabled" Style="{DynamicResource TextBlockBlack}"/>
+                        <CheckBox Name="checkbox_Preferences_Enabled" Margin="10,0,0,0" Style="{DynamicResource CheckBoxBlack}"/>
+                    </StackPanel>
+
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Intensity" Style="{DynamicResource TextBlockBlack}"/>
+                        <Slider Grid.Column="1" Name="slider_Preferences_Intensity" Margin="10,0,0,0" Minimum="0" Maximum="100" Style="{DynamicResource SliderBlockWhite}"/>
+                    </Grid>
+
+                    <TextBlock Margin="0,20,0,0" Text="* After changing the intensity you may need to restart the application if it is running." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
+                    <TextBlock Margin="0,20,0,0" Text="* If an application is not listed above start the application once and restart this tool, if it still does not appear you can try to force Auto HDR on the applications tab." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Grid Applications -->
+            <Grid Name="grid_Applications" Grid.Column="1" Visibility="Collapsed">
+                <StackPanel Margin="5">
+                    <TextBlock Text="Here you can force applications to use Auto HDR that are not supported by default." TextWrapping="Wrap" Style="{DynamicResource TextBlockBlack}"/>
+
+                    <TextBlock Text="Add application" TextWrapping="Wrap" FontSize="{DynamicResource TextSizeHuge}" Style="{DynamicResource TextBlockBlack}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Name="textbox_Support_Executable" Text="Executable file name (example: notepad.exe)" AVStyles:TextboxPlaceholder.Placeholder="Executable file name (example: notepad.exe)" Style="{DynamicResource TextBoxBlack}"/>
+                        <Button Grid.Column="1" Name="button_Support_Browse" Margin="10,0,0,0" Content="Browse" Style="{DynamicResource ButtonAccentBlack}"/>
+                    </Grid>
+
+                    <Button Margin="0,10,0,0" Name="button_Support_Add" Content="Add application executable" Style="{DynamicResource ButtonAccentBlack}"/>
+
+                    <TextBlock Margin="0,10,0,0" Text="Remove application" TextWrapping="Wrap" FontSize="{DynamicResource TextSizeHuge}" Style="{DynamicResource TextBlockBlack}"/>
+                    <ComboBox Name="combobox_Support_Applications" Height="35" Style="{DynamicResource ComboBoxBlack}"/>
+                    <Button Margin="0,10,0,0" Name="button_Support_Remove" Content="Remove selected application" Style="{DynamicResource ButtonAccentBlack}"/>
+
+                    <TextBlock Margin="0,20,0,0" Text="* Forced applications do not show an Auto HDR windows notification when launched." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
+                    <TextBlock Margin="0,20,0,0" Text="* Forced applications ignore the global Windows Auto HDR enable setting, they will always use Auto HDR even if you have it disabled in the system display settings or general tab." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Grid General -->
+            <Grid Name="grid_General" Grid.Column="1" Visibility="Collapsed">
+                <StackPanel Margin="5">
+                    <Button Name="button_MonitorHdrEnable" Content="Enable monitor HDR" Style="{DynamicResource ButtonAccentBlack}"/>
+                    <Button Margin="0,10,0,0" Name="button_MonitorHdrDisable" Content="Disable monitor HDR" Style="{DynamicResource ButtonAccentBlack}"/>
+
+                    <Button Margin="0,20,0,0" Name="button_AutoHdrEnable" Content="Enable Windows Auto HDR" Style="{DynamicResource ButtonAccentBlack}"/>
+                    <Button Margin="0,10,0,0" Name="button_AutoHdrDisable" Content="Disable Windows Auto HDR" Style="{DynamicResource ButtonAccentBlack}"/>
+
+                    <Button Margin="0,20,0,0" Name="button_AutoHdrNotificationEnable" Content="Enable Auto HDR Notification" Style="{DynamicResource ButtonAccentBlack}"/>
+                    <Button Margin="0,10,0,0" Name="button_AutoHdrNotificationDisable" Content="Disable Auto HDR Notification" Style="{DynamicResource ButtonAccentBlack}"/>
+
+                    <Grid Margin="0,20,0,0" IsEnabled="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="SDR content brightness" Style="{DynamicResource TextBlockBlack}"/>
+                        <Slider Grid.Column="1" Name="slider_Windows_SdrBrightness" Margin="10,0,0,0" Minimum="0" Maximum="100" Style="{DynamicResource SliderBlockWhite}"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
