@@ -10,6 +10,11 @@
         Height="500"
         Width="750">
     <Grid>
+        <!-- Grid Status -->
+        <Border Name="border_Status" Visibility="Collapsed" CornerRadius="6" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{DynamicResource ApplicationVoidGrayBrush}" IsHitTestVisible="False">
+            <TextBlock Margin="5" Name="textblock_Status" FontSize="{DynamicResource TextSizeMedium}" Style="{DynamicResource TextBlockWhite}"/>
+        </Border>
+
         <!-- Grid Main -->
         <Grid>
             <Grid.ColumnDefinitions>
@@ -38,7 +43,17 @@
             <!-- Grid Preferences -->
             <Grid Name="grid_Preferences" Grid.Column="1">
                 <StackPanel Margin="5">
-                    <ComboBox Name="combobox_Preferences_Applications" Height="35" Style="{DynamicResource ComboBoxBlack}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" Name="combobox_Preferences_Applications" Height="36" Style="{DynamicResource ComboBoxBlack}"/>
+
+                        <Button Grid.Column="1" Name="button_Preferences_Applications_Refresh" Height="36" Margin="10,0,0,0" Style="{DynamicResource ButtonAccentBlack}" ToolTip="Refresh applications">
+                            <Image Source="/Assets/Refresh.png"/>
+                        </Button>
+                    </Grid>
 
                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                         <TextBlock Text="Enabled" Style="{DynamicResource TextBlockBlack}"/>
@@ -55,7 +70,7 @@
                     </Grid>
 
                     <TextBlock Margin="0,20,0,0" Text="* After changing the intensity you may need to restart the application if it is running." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
-                    <TextBlock Margin="0,20,0,0" Text="* If an application is not listed above start the application once and restart this tool, if it still does not appear you can try to force Auto HDR on the applications tab." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
+                    <TextBlock Margin="0,20,0,0" Text="* If an application is not listed above start the application once and refresh the applications, if it still does not appear you can try to force Auto HDR on the applications tab, only applications using OpenGL, Vulkan or DirectX are supported." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
                 </StackPanel>
             </Grid>
 
@@ -69,9 +84,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Name="textbox_Support_Executable" Text="Executable file name (example: notepad.exe)" AVStyles:TextboxPlaceholder.Placeholder="Executable file name (example: notepad.exe)" Style="{DynamicResource TextBoxBlack}"/>
-                        <Button Grid.Column="1" Name="button_Support_Browse" Margin="10,0,0,0" Content="Browse" Style="{DynamicResource ButtonAccentBlack}"/>
+                        <Button Grid.Column="1" Name="button_Support_BrowseFiles" Margin="10,0,0,0" Content="Browse files" Style="{DynamicResource ButtonAccentBlack}"/>
+                        <Button Grid.Column="2" Name="button_Support_SelectProcess" Margin="10,0,0,0" Content="Select process" Style="{DynamicResource ButtonAccentBlack}"/>
                     </Grid>
 
                     <Button Margin="0,10,0,0" Name="button_Support_Add" Content="Add application executable" Style="{DynamicResource ButtonAccentBlack}"/>

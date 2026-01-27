@@ -1,4 +1,4 @@
-![Intensity](Screenshots/Screenshot1.png)
+![Preferences](Screenshots/Screenshot1.png)
 ![Applications](Screenshots/Screenshot2.png)
 
 ## Application description
@@ -22,5 +22,5 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate this project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
-v1.0.0.0 (25-January-2026)
+v1.0.0.0 (??-February-2026)
 - First public test release.

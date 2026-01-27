@@ -1,4 +1,5 @@
-﻿using ArnoldVinkStyles;
+﻿using ArnoldVinkCode;
+using ArnoldVinkStyles;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using static ArnoldVinkCode.AVProcess;
 
 namespace AutoHdrTool
 {
@@ -27,7 +29,9 @@ namespace AutoHdrTool
                 slider_Preferences_Intensity.ValueChanged += Slider_Preferences_Intensity_ValueChanged;
                 slider_Windows_SdrBrightness.ValueChanged += Slider_Windows_SdrBrightness_ValueChanged;
                 combobox_Preferences_Applications.SelectionChanged += Combobox_Preferences_Applications_SelectionChanged;
-                button_Support_Browse.Click += Button_Support_Browse_Click;
+                button_Preferences_Applications_Refresh.Click += Button_Preferences_Applications_Refresh_Click;
+                button_Support_BrowseFiles.Click += Button_Support_BrowseFiles_Click;
+                button_Support_SelectProcess.Click += Button_Support_SelectProcess_Click;
                 button_Support_Add.Click += Button_Support_Add_Click;
                 button_Support_Remove.Click += Button_Support_Remove_Click;
                 button_MonitorHdrEnable.Click += Button_MonitorHdrEnable_Click;
@@ -38,6 +42,16 @@ namespace AutoHdrTool
                 button_AutoHdrNotificationDisable.Click += Button_AutoHdrNotificationDisable_Click;
                 Closing += MainWindow_Closing;
 
+                //List applications
+                ListApplications();
+            }
+            catch { }
+        }
+
+        private void Button_Preferences_Applications_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
                 //List applications
                 ListApplications();
             }
@@ -85,12 +99,18 @@ namespace AutoHdrTool
             try
             {
                 List<string> supportApps = AutoHdrList.List_Support_Applications();
+                supportApps.Sort();
                 combobox_Support_Applications.ItemsSource = supportApps;
                 combobox_Support_Applications.SelectedIndex = 0;
 
                 List<string> preferencesApps = AutoHdrList.List_Preferences_Applications();
+                preferencesApps.Sort();
                 combobox_Preferences_Applications.ItemsSource = preferencesApps;
                 combobox_Preferences_Applications.SelectedIndex = 0;
+
+                //Show status
+                ShowStatusMessage("Listed applications");
+                Debug.WriteLine("Listed applications");
             }
             catch { }
         }
@@ -101,6 +121,9 @@ namespace AutoHdrTool
             {
                 //Set auto hdr enabled
                 AutoHdrPreferences.SetAppAutoHdrEnabled("DirectXUserGlobalSettings", false);
+
+                //Show status
+                ShowStatusMessage("Windows Auto HDR disabled");
             }
             catch { }
         }
@@ -111,6 +134,9 @@ namespace AutoHdrTool
             {
                 //Set auto hdr enabled
                 AutoHdrPreferences.SetAppAutoHdrEnabled("DirectXUserGlobalSettings", true);
+
+                //Show status
+                ShowStatusMessage("Windows Auto HDR enabled");
             }
             catch { }
         }
@@ -153,16 +179,19 @@ namespace AutoHdrTool
                 string placeholder = (string)textbox_Support_Executable.GetValue(TextboxPlaceholder.PlaceholderProperty);
                 if (string.IsNullOrWhiteSpace(executablePath))
                 {
+                    ShowStatusMessage("Empty executable");
                     Debug.WriteLine("Empty executable");
                     return;
                 }
                 else if (!executablePath.Contains("."))
                 {
+                    ShowStatusMessage("Extension missing");
                     Debug.WriteLine("Extension missing");
                     return;
                 }
                 else if (executablePath == placeholder)
                 {
+                    ShowStatusMessage("Placeholder text");
                     Debug.WriteLine("Placeholder text");
                     return;
                 }
@@ -176,7 +205,7 @@ namespace AutoHdrTool
             catch { }
         }
 
-        private void Button_Support_Browse_Click(object sender, RoutedEventArgs e)
+        private void Button_Support_BrowseFiles_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -191,6 +220,44 @@ namespace AutoHdrTool
                     string selectedFileName = openFileDialog.FileName;
                     textbox_Support_Executable.Text = Path.GetFileName(selectedFileName);
                 }
+            }
+            catch { }
+        }
+
+        private void Button_Support_SelectProcess_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //List processes
+                List<string> processSelect = [];
+                var processList = AVProcess.Get_ProcessesMultiAll();
+                foreach (ProcessMulti processMulti in processList)
+                {
+                    try
+                    {
+                        //Check if process is valid
+                        if (!processMulti.Validate())
+                        {
+                            continue;
+                        }
+
+                        //Get application main window handle
+                        IntPtr windowHandleMain = processMulti.WindowHandleMain();
+
+                        //Check if application has valid main window
+                        if (windowHandleMain == IntPtr.Zero)
+                        {
+                            continue;
+                        }
+
+                        processSelect.Add(processMulti.ExeName);
+                    }
+                    catch { }
+                }
+
+                //Show messagebox
+                string selectedProcess = AVMessageBox.Popup(this, "Select process", string.Empty, processSelect);
+                textbox_Support_Executable.Text = selectedProcess;
             }
             catch { }
         }
