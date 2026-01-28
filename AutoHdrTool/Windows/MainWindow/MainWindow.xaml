@@ -63,10 +63,12 @@
                     <Grid Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Intensity" Style="{DynamicResource TextBlockBlack}"/>
-                        <Slider Grid.Column="1" Name="slider_Preferences_Intensity" Margin="10,0,0,0" Minimum="0" Maximum="100" Style="{DynamicResource SliderBlockWhite}"/>
+                        <TextBlock Grid.Column="0" Text="Intensity" VerticalAlignment="Center" Style="{DynamicResource TextBlockBlack}"/>
+                        <TextBox Grid.Column="1" Text="{Binding ElementName=slider_Preferences_Intensity, Path=Value}" TextAlignment="Center" IsEnabled="False" MinWidth="40" Padding="2" Margin="10,0,0,0" Style="{DynamicResource TextBoxBlack}"/>
+                        <Slider Grid.Column="2" Name="slider_Preferences_Intensity" Margin="10,0,0,0" Minimum="0" Maximum="100" Style="{DynamicResource SliderBlockWhite}"/>
                     </Grid>
 
                     <TextBlock Margin="0,20,0,0" Text="* After changing the intensity you may need to restart the application if it is running." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
@@ -105,16 +107,16 @@
             <!-- Grid General -->
             <Grid Name="grid_General" Grid.Column="1" Visibility="Collapsed">
                 <StackPanel Margin="5">
-                    <Button Name="button_MonitorHdrEnable" Content="Enable monitor HDR" Style="{DynamicResource ButtonAccentBlack}"/>
-                    <Button Margin="0,10,0,0" Name="button_MonitorHdrDisable" Content="Disable monitor HDR" Style="{DynamicResource ButtonAccentBlack}"/>
+                    <Button Name="button_MonitorHdrEnable" Content="Enable Monitor HDR" Style="{DynamicResource ButtonAccentBlack}"/>
+                    <Button Margin="0,10,0,0" Name="button_MonitorHdrDisable" Content="Disable Monitor HDR" Style="{DynamicResource ButtonAccentBlack}"/>
 
                     <Button Margin="0,20,0,0" Name="button_AutoHdrEnable" Content="Enable Windows Auto HDR" Style="{DynamicResource ButtonAccentBlack}"/>
                     <Button Margin="0,10,0,0" Name="button_AutoHdrDisable" Content="Disable Windows Auto HDR" Style="{DynamicResource ButtonAccentBlack}"/>
 
-                    <Button Margin="0,20,0,0" Name="button_AutoHdrNotificationEnable" Content="Enable Auto HDR Notification" Style="{DynamicResource ButtonAccentBlack}"/>
-                    <Button Margin="0,10,0,0" Name="button_AutoHdrNotificationDisable" Content="Disable Auto HDR Notification" Style="{DynamicResource ButtonAccentBlack}"/>
+                    <Button Margin="0,20,0,0" Name="button_AutoHdrNotificationEnable" Content="Enable Windows Auto HDR Notification" Style="{DynamicResource ButtonAccentBlack}"/>
+                    <Button Margin="0,10,0,0" Name="button_AutoHdrNotificationDisable" Content="Disable Windows Auto HDR Notification" Style="{DynamicResource ButtonAccentBlack}"/>
 
-                    <Grid Margin="0,20,0,0" IsEnabled="False">
+                    <Grid Margin="0,20,0,0" IsEnabled="False" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>

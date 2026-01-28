@@ -43,7 +43,7 @@ namespace AutoHdrTool
                 Closing += MainWindow_Closing;
 
                 //List applications
-                ListApplications();
+                ListApplications(false);
             }
             catch { }
         }
@@ -53,19 +53,35 @@ namespace AutoHdrTool
             try
             {
                 //List applications
-                ListApplications();
+                ListApplications(true);
             }
             catch { }
         }
 
         private void Button_AutoHdrNotificationEnable_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Button_AutoHdrNotificationEnable_Click");
+            try
+            {
+                AutoHdrNotification.SetAutoHdrNotificationEnabled(true);
+
+                //Show status
+                ShowStatusMessage("Auto HDR notification enabled");
+                Debug.WriteLine("Auto HDR notification enabled");
+            }
+            catch { }
         }
 
         private void Button_AutoHdrNotificationDisable_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Button_AutoHdrNotificationDisable_Click");
+            try
+            {
+                AutoHdrNotification.SetAutoHdrNotificationEnabled(false);
+
+                //Show status
+                ShowStatusMessage("Auto HDR notification disabled");
+                Debug.WriteLine("Auto HDR notification disabled");
+            }
+            catch { }
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -94,7 +110,7 @@ namespace AutoHdrTool
             catch { }
         }
 
-        private void ListApplications()
+        private void ListApplications(bool showStatus)
         {
             try
             {
@@ -109,7 +125,10 @@ namespace AutoHdrTool
                 combobox_Preferences_Applications.SelectedIndex = 0;
 
                 //Show status
-                ShowStatusMessage("Listed applications");
+                if (showStatus)
+                {
+                    ShowStatusMessage("Listed applications");
+                }
                 Debug.WriteLine("Listed applications");
             }
             catch { }
@@ -143,17 +162,37 @@ namespace AutoHdrTool
 
         private void Button_MonitorHdrDisable_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Button_MonitorHdrDisable_Click");
+            try
+            {
+                //Set monitor hdr enabled
+                MonitorHDR.MonitorHDREnabled(false);
+
+                //Show status
+                ShowStatusMessage("Monitor HDR disabled");
+            }
+            catch { }
         }
 
         private void Button_MonitorHdrEnable_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Button_MonitorHdrEnable_Click");
+            try
+            {
+                //Set monitor hdr enabled
+                MonitorHDR.MonitorHDREnabled(true);
+
+                //Show status
+                ShowStatusMessage("Monitor HDR enabled");
+            }
+            catch { }
         }
 
         private void Slider_Windows_SdrBrightness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Debug.WriteLine("Slider_Windows_SdrBrightness_ValueChanged");
+            try
+            {
+                Debug.WriteLine("Slider_Windows_SdrBrightness_ValueChanged");
+            }
+            catch { }
         }
 
         private void Button_Support_Remove_Click(object sender, RoutedEventArgs e)
@@ -165,7 +204,10 @@ namespace AutoHdrTool
                 AutoHdrForce.DisableForceAutoHDR(executablePath);
 
                 //List applications
-                ListApplications();
+                ListApplications(false);
+
+                //Show status
+                ShowStatusMessage("Application removed");
             }
             catch { }
         }
@@ -200,7 +242,10 @@ namespace AutoHdrTool
                 AutoHdrForce.EnableForceAutoHDR(executablePath);
 
                 //List applications
-                ListApplications();
+                ListApplications(false);
+
+                //Show status
+                ShowStatusMessage("Application added");
             }
             catch { }
         }
@@ -270,6 +315,9 @@ namespace AutoHdrTool
                 CheckBox senderCheckBox = (CheckBox)sender;
                 string executablePath = (string)combobox_Preferences_Applications.SelectedItem;
                 AutoHdrPreferences.SetAppAutoHdrEnabled(executablePath, (bool)senderCheckBox.IsChecked);
+
+                //Show status
+                ShowStatusMessage("App Auto HDR " + ((bool)senderCheckBox.IsChecked ? "enabled" : "disabled"));
             }
             catch { }
         }
@@ -288,6 +336,9 @@ namespace AutoHdrTool
                 Slider senderSlider = (Slider)sender;
                 string executablePath = (string)combobox_Preferences_Applications.SelectedItem;
                 AutoHdrPreferences.SetAppAutoHdrIntensity(executablePath, (int)senderSlider.Value);
+
+                //Show status
+                ShowStatusMessage("App intensity set to " + (int)senderSlider.Value);
 
                 //Fix find way to trigger Auto HDR to update in running application without having to restart it
             }
