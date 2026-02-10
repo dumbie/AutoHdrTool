@@ -10,11 +10,6 @@
         Height="500"
         Width="750">
     <Grid>
-        <!-- Grid Status -->
-        <Border Name="border_Status" Visibility="Collapsed" CornerRadius="6" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{DynamicResource ApplicationVoidGrayBrush}" IsHitTestVisible="False">
-            <TextBlock Margin="5" Name="textblock_Status" FontSize="{DynamicResource TextSizeMedium}" Style="{DynamicResource TextBlockWhite}"/>
-        </Border>
-
         <!-- Grid Main -->
         <Grid>
             <Grid.ColumnDefinitions>
@@ -78,30 +73,33 @@
 
             <!-- Grid Applications -->
             <Grid Name="grid_Applications" Grid.Column="1" Visibility="Collapsed">
-                <StackPanel Margin="5">
-                    <TextBlock Text="Here you can force applications to use Auto HDR that are not supported by default." TextWrapping="Wrap" Style="{DynamicResource TextBlockBlack}"/>
+                <ScrollViewer>
+                    <StackPanel Margin="5">
+                        <TextBlock Text="Here you can force applications to use Auto HDR that are not supported by default." TextWrapping="Wrap" Style="{DynamicResource TextBlockBlack}"/>
 
-                    <TextBlock Text="Add application" TextWrapping="Wrap" FontSize="{DynamicResource TextSizeHuge}" Style="{DynamicResource TextBlockBlack}"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Name="textbox_Support_Executable" Text="Executable file name (example: notepad.exe)" AVStyles:TextboxPlaceholder.Placeholder="Executable file name (example: notepad.exe)" Style="{DynamicResource TextBoxBlack}"/>
-                        <Button Grid.Column="1" Name="button_Support_BrowseFiles" Margin="10,0,0,0" Content="Browse files" Style="{DynamicResource ButtonAccentBlack}"/>
-                        <Button Grid.Column="2" Name="button_Support_SelectProcess" Margin="10,0,0,0" Content="Select process" Style="{DynamicResource ButtonAccentBlack}"/>
-                    </Grid>
+                        <TextBlock Text="Add application" TextWrapping="Wrap" FontSize="{DynamicResource TextSizeHuge}" Style="{DynamicResource TextBlockBlack}"/>
+                        <Button Name="button_Support_BrowseFiles" Content="Browse for executable file" Style="{DynamicResource ButtonAccentBlack}"/>
+                        <Button Name="button_Support_SelectProcess" Margin="0,10,0,0" Content="Select running process" Style="{DynamicResource ButtonAccentBlack}"/>
 
-                    <Button Margin="0,10,0,0" Name="button_Support_Add" Content="Add application executable" Style="{DynamicResource ButtonAccentBlack}"/>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Name="textbox_Support_Executable" Text="Executable file name (example: notepad.exe)" AVStyles:TextboxPlaceholder.Placeholder="Executable file name (example: notepad.exe)" Style="{DynamicResource TextBoxBlack}"/>
+                            <Button Grid.Column="1" Margin="10,0,0,0" Name="button_Support_Add" Content="Add executable by file name *1" Style="{DynamicResource ButtonAccentBlack}"/>
+                        </Grid>
 
-                    <TextBlock Margin="0,10,0,0" Text="Remove application" TextWrapping="Wrap" FontSize="{DynamicResource TextSizeHuge}" Style="{DynamicResource TextBlockBlack}"/>
-                    <ComboBox Name="combobox_Support_Applications" Height="35" Style="{DynamicResource ComboBoxBlack}"/>
-                    <Button Margin="0,10,0,0" Name="button_Support_Remove" Content="Remove selected application" Style="{DynamicResource ButtonAccentBlack}"/>
+                        <TextBlock Margin="0,10,0,0" Text="Remove application" TextWrapping="Wrap" FontSize="{DynamicResource TextSizeHuge}" Style="{DynamicResource TextBlockBlack}"/>
+                        <ComboBox Name="combobox_Support_Applications" Height="35" Style="{DynamicResource ComboBoxBlack}"/>
+                        <Button Margin="0,10,0,0" Name="button_Support_Remove" Content="Remove selected application" Style="{DynamicResource ButtonAccentBlack}"/>
 
-                    <TextBlock Margin="0,20,0,0" Text="* Forced applications do not show an Auto HDR windows notification when launched." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
-                    <TextBlock Margin="0,20,0,0" Text="* Forced applications ignore the global Windows Auto HDR enable setting, they will always use Auto HDR even if you have it disabled in the system display settings or general tab." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
-                </StackPanel>
+                        <TextBlock Margin="0,20,0,0" Text="*1 If you add an application using this method you will need to launch the application first before you can change it's preferences." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
+                        <TextBlock Margin="0,20,0,0" Text="* Forced applications do not show an Auto HDR windows notification when launched." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
+                        <TextBlock Margin="0,20,0,0" Text="* Forced applications ignore the global Windows Auto HDR enable setting, they will always use Auto HDR even if you have it disabled in the system display settings or 'General' tab, you can still turn it off on the 'Preferences' tab." TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
 
             <!-- Grid General -->
@@ -124,8 +122,15 @@
                         <TextBlock Grid.Column="0" Text="SDR content brightness" Style="{DynamicResource TextBlockBlack}"/>
                         <Slider Grid.Column="1" Name="slider_Windows_SdrBrightness" Margin="10,0,0,0" Minimum="0" Maximum="100" Style="{DynamicResource SliderBlockWhite}"/>
                     </Grid>
+
+                    <TextBlock Name="textblock_AppInformation" Margin="0,15,0,0" TextWrapping="Wrap" Style="{DynamicResource TextBlockGray}"/>
                 </StackPanel>
             </Grid>
         </Grid>
+
+        <!-- Grid Status -->
+        <Border Name="border_Status" Visibility="Collapsed" CornerRadius="6" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{DynamicResource ApplicationVoidGrayBrush}" IsHitTestVisible="False">
+            <TextBlock Margin="5" Name="textblock_Status" FontSize="{DynamicResource TextSizeMedium}" Style="{DynamicResource TextBlockWhite}"/>
+        </Border>
     </Grid>
 </Window>

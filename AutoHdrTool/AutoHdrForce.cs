@@ -6,12 +6,12 @@ namespace AutoHdrTool
     public static class AutoHdrForce
     {
         //Check Auto HDR for unsupported application
-        public static bool CheckForceAutoHDR(string executablePath)
+        public static bool CheckForceAutoHDR(string executableName)
         {
             try
             {
                 //Set application name
-                string d3DName = executablePath;
+                string d3DName = executableName;
 
                 //Open Windows registry
                 using (RegistryKey regKeyCurrentUser = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
@@ -39,12 +39,12 @@ namespace AutoHdrTool
         }
 
         //Enable Auto HDR for unsupported application
-        public static void EnableForceAutoHDR(string executablePath)
+        public static void EnableForceAutoHDR(string executableName)
         {
             try
             {
                 //Set application name
-                string d3DName = executablePath;
+                string d3DName = executableName;
                 string d3DBehaviors = "DisableBufferUpgrade=0;BufferUpgradeOverride=1;BufferUpgradeEnable10Bit=1;";
 
                 //Open Windows registry
@@ -67,12 +67,12 @@ namespace AutoHdrTool
         }
 
         //Disable Auto HDR for unsupported application
-        public static void DisableForceAutoHDR(string executablePath)
+        public static void DisableForceAutoHDR(string executableName)
         {
             try
             {
                 //Set application name
-                string d3DName = executablePath;
+                string d3DName = executableName;
 
                 //Open Windows registry
                 using (RegistryKey regKeyCurrentUser = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))

@@ -44,6 +44,9 @@ namespace AutoHdrTool
 
                 //List applications
                 ListApplications(false);
+
+                //Set application information
+                textblock_AppInformation.Text = "Application made by Arnold Vink\r\nVersion " + AVFunctions.ApplicationVersion();
             }
             catch { }
         }
@@ -256,14 +259,28 @@ namespace AutoHdrTool
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Title = "Select an executable file";
+                openFileDialog.Filter = "Exe files|*.exe|Bin files|*.bin";
                 if (openFileDialog.ShowDialog() == false)
                 {
                     return;
                 }
                 else
                 {
-                    string selectedFileName = openFileDialog.FileName;
-                    textbox_Support_Executable.Text = Path.GetFileName(selectedFileName);
+                    //Get application file path
+                    string selectedFilePath = openFileDialog.FileName;
+                    string selectedFileName = Path.GetFileName(selectedFilePath);
+
+                    //Add application to registry
+                    AutoHdrForce.EnableForceAutoHDR(selectedFileName);
+
+                    //Enable application Auto HDR
+                    AutoHdrPreferences.SetAppAutoHdrEnabled(selectedFilePath, true);
+
+                    //List applications
+                    ListApplications(false);
+
+                    //Show status
+                    ShowStatusMessage("Application added");
                 }
             }
             catch { }
@@ -295,14 +312,41 @@ namespace AutoHdrTool
                             continue;
                         }
 
-                        processSelect.Add(processMulti.ExeName);
+                        //Add process
+                        processSelect.Add(processMulti.ExeName + " (" + processMulti.Identifier + ")");
                     }
                     catch { }
                 }
 
                 //Show messagebox
-                string selectedProcess = AVMessageBox.Popup(this, "Select process", string.Empty, processSelect);
-                textbox_Support_Executable.Text = selectedProcess;
+                string selectedProcessString = AVMessageBox.Popup(this, "Select process", string.Empty, processSelect);
+
+                //Get application file path
+                foreach (ProcessMulti processMulti in processList)
+                {
+                    try
+                    {
+                        string matchProcessString = processMulti.ExeName + " (" + processMulti.Identifier + ")";
+                        if (matchProcessString == selectedProcessString)
+                        {
+                            //Add application to registry
+                            AutoHdrForce.EnableForceAutoHDR(processMulti.ExeName);
+
+                            //Enable application Auto HDR
+                            AutoHdrPreferences.SetAppAutoHdrEnabled(processMulti.ExePath, true);
+
+                            //List applications
+                            ListApplications(false);
+
+                            //Show status
+                            ShowStatusMessage("Application added");
+
+                            //Return
+                            return;
+                        }
+                    }
+                    catch { }
+                }
             }
             catch { }
         }

@@ -55,7 +55,7 @@ namespace AutoHdrTool
                         string hdrEnabledValue = targetEnabled ? "1" : "0";
 
                         //Set auto hdr intensity
-                        if (appSettingsString.Contains("AutoHDREnable"))
+                        if (!string.IsNullOrWhiteSpace(appSettingsString) && appSettingsString.Contains("AutoHDREnable"))
                         {
                             appSettingsString = Regex.Replace(appSettingsString, @"AutoHDREnable=(.*?);", "AutoHDREnable=" + hdrEnabledValue + ";");
                         }
@@ -121,7 +121,7 @@ namespace AutoHdrTool
                         string appSettingsString = microsoftSubKey.GetValue(executablePath)?.ToString();
 
                         //Set auto hdr intensity
-                        if (appSettingsString.Contains("AutoHDRStrength"))
+                        if (!string.IsNullOrWhiteSpace(appSettingsString) && appSettingsString.Contains("AutoHDRStrength"))
                         {
                             appSettingsString = Regex.Replace(appSettingsString, @"AutoHDRStrength=(.*?);", "AutoHDRStrength=" + targetIntensity + ";");
                         }
