@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using static ArnoldVinkCode.AVProcess;
 
 namespace AutoHdrTool
 {
@@ -292,8 +291,8 @@ namespace AutoHdrTool
             {
                 //List processes
                 List<string> processSelect = [];
-                var processList = AVProcess.Get_ProcessesMultiAll();
-                foreach (ProcessMulti processMulti in processList)
+                var processList = AVProcess.Get_ProcessAll();
+                foreach (AVProcess processMulti in processList)
                 {
                     try
                     {
@@ -318,11 +317,21 @@ namespace AutoHdrTool
                     catch { }
                 }
 
+                //Add cancel button
+                processSelect.Add("Cancel");
+
                 //Show messagebox
                 string selectedProcessString = AVMessageBox.Popup(this, "Select process", string.Empty, processSelect);
 
+                //Check cancel button
+                if (selectedProcessString == "Cancel")
+                {
+                    AVDebug.WriteLine("Cancelled.");
+                    return;
+                }
+
                 //Get application file path
-                foreach (ProcessMulti processMulti in processList)
+                foreach (AVProcess processMulti in processList)
                 {
                     try
                     {
@@ -335,11 +344,15 @@ namespace AutoHdrTool
                             //Enable application Auto HDR
                             AutoHdrPreferences.SetAppAutoHdrEnabled(processMulti.ExePath, true);
 
+                            //Set default Auto HDR intensity
+                            AutoHdrPreferences.SetAppAutoHdrIntensity(processMulti.ExePath, 70);
+
                             //List applications
                             ListApplications(false);
 
                             //Show status
                             ShowStatusMessage("Application added");
+                            AVDebug.WriteLine("Application added");
 
                             //Return
                             return;
