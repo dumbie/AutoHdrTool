@@ -9,7 +9,7 @@ Change Windows Auto HDR settings without Xbox Game Bar and allow unsupported app
 2) Run the AutoHdrTool executable file to launch the application.
 
 ## Requirements
-- Microsoft .NET Runtime installed.
+- Microsoft .NET Desktop Runtime installed.
 - Microsoft Windows 11 64-bit or higher is required.
 
 ## Known Issues
@@ -22,5 +22,8 @@ When you are walking into any problems or a bug you can go to my help page at ht
 If you appreciate this project and want to support me with my projects you can make a donation through https://donation.arnoldvink.com
 
 ## Changelog
+v1.2.0.0 (11-May-2026)
+- Set default Auto HDR intensity to 70.
+
 v1.0.0.0 (28-January-2026)
 - First public release.
