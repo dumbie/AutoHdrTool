@@ -240,7 +240,7 @@ namespace AutoHdrTool
                     return;
                 }
 
-                //Add application
+                //Add application to registry
                 AutoHdrForce.EnableForceAutoHDR(executablePath);
 
                 //List applications
@@ -274,6 +274,9 @@ namespace AutoHdrTool
 
                     //Enable application Auto HDR
                     AutoHdrPreferences.SetAppAutoHdrEnabled(selectedFilePath, true);
+
+                    //Set default Auto HDR intensity
+                    AutoHdrPreferences.SetAppAutoHdrIntensity(selectedFilePath, 70);
 
                     //List applications
                     ListApplications(false);

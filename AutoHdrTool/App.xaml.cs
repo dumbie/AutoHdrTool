@@ -11,7 +11,7 @@ namespace AutoHdrTool
             try
             {
                 //Setup application defaults
-                SetupDefaults(ProcessPriorityClasses.Normal, true);
+                SetupDefaults(ProcessPriorityClasses.Normal, true, false);
 
                 //Run application startup code
                 await AppStartup.Startup();
